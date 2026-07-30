@@ -6,6 +6,11 @@ class Brand(models.Model):
     name = models.CharField('Бренд', max_length=100, unique=True)
     slug = models.SlugField(unique=True, blank=True)
 
+    class Meta:
+        verbose_name = 'Бренд'
+        verbose_name_plural = 'Бренды'
+        ordering = ['name']
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -17,6 +22,11 @@ class Brand(models.Model):
 class Category(models.Model):
     name = models.CharField('Категория', max_length=100)
     slug = models.SlugField(unique=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        ordering = ['name']
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -38,6 +48,11 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     meta_title = models.CharField(max_length=255, blank=True)      # SEO
     meta_description = models.TextField(blank=True)               # SEO
+
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
+        ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
         if not self.slug:
