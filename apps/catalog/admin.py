@@ -1,5 +1,18 @@
 from django.contrib import admin
-from .models import Brand, Category, Product
+from .models import Brand, Category, Product, Attribute, ProductAttribute
+
+
+class ProductAttributeInline(admin.TabularInline):
+    model = ProductAttribute
+    extra = 1
+    autocomplete_fields = ['attribute']
+
+
+@admin.register(Attribute)
+class AttributeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    search_fields = ('name',)
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(Brand)
@@ -24,6 +37,7 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     list_editable = ('price', 'is_active')
     readonly_fields = ('created_at',)
+    inlines = [ProductAttributeInline]
 
     fieldsets = (
         ('Основная информация', {
