@@ -19,6 +19,9 @@ logs:
 migrate:
 	sudo docker compose exec web python manage.py migrate
 
+collectstatic:
+	sudo docker compose exec web python manage.py collectstatic --noinput
+
 makemigrations:
 	sudo docker compose exec web python manage.py makemigrations
 
