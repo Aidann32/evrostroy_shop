@@ -11,15 +11,15 @@ def product_list(request):
             Q(name__icontains=query) | Q(brand__name__icontains=query)
         )
 
-    return render(request, 'catalog/product_list.html', {
+    return render(request, 'catalog/category_products.html', {
         'products': products,
         'query': query,
     })
 
-def category_detail(request, slug):
+def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
     products = Product.objects.filter(category=category, is_active=True)
-    return render(request, 'catalog/product_list.html', {
+    return render(request, 'catalog/category_products.html', {
         'category': category,
         'products': products,
     })

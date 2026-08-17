@@ -72,7 +72,7 @@
                 {% for category in categories %}
                     <div class="col-md-4">
                         <div class="category-block text-center border p-4">
-                            <a href="{% url 'category_detail' category.slug %}">
+                            <a href="{% url 'category_products' category.slug %}">
                                 <h3>{{ category.name }}</h3>
                             </a>
                         </div>
@@ -82,6 +82,39 @@
                         <p>Категории пока не добавлены.</p>
                     </div>
                 {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="section-b-space mt-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title1">
+{#                        <h4>наш ассортимент</h4>#}
+                        <h2 class="title-inner1">наши партнеры</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    Партнер 1
+                </div>
+                <div class="col-md-3">
+                    Партнер 1
+                </div>
+                <div class="col-md-3">
+                    Партнер 1
+                </div>
+                <div class="col-md-3">
+                    Партнер 1
+                </div>
+                <div class="col-md-3">
+                    Партнер 1
+                </div>
+                <div class="col-md-3">
+                    Партнер 1
+                </div>
             </div>
         </div>
     </section>
