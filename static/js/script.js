@@ -37,6 +37,17 @@
 (function ($) {
     "use strict";
 
+    $(document).on('click', 'a[href^="#"]', function (e) {
+        var href = $(this).attr('href');
+        if (href === '#' || href === '#!') {
+            e.preventDefault();
+        }
+    });
+
+    $(document).on('click', 'a[href=""]', function (e) {
+        e.preventDefault();
+    });
+
     /*=====================
      01.Pre loader
      ==========================*/
@@ -44,13 +55,9 @@
         setTimeout(function () {
             $('.loader_skeleton').fadeOut('slow');
             $('body').css({
-                // 'overflow': 'auto'
+                'overflow': 'auto'
             });
         }, 500);
-        $('.loader_skeleton').remove('slow');
-        $('body').css({
-            // 'overflow': 'hidden'
-        });
     });
     $('#preloader').fadeOut('slow', function () {
         $(this).remove();
@@ -324,60 +331,82 @@
     /*=====================
      13. Full slider
      ==========================*/
-    if ($(window).width() > 767) {
-        var $slider = $(".full-slider");
-        $slider.
-            on('init', function () {
-                mouseWheel($slider);
-            }).
-            slick({
-                dots: true,
-                nav: false,
-                vertical: true,
-                infinite: false
-            });
+    if ($(".full-slider").length > 0) {
+        if ($(window).width() > 767) {
+            var $slider = $(".full-slider");
+            $slider.
+                on('init', function () {
+                    mouseWheel($slider);
+                }).
+                slick({
+                    dots: true,
+                    nav: false,
+                    vertical: true,
+                    infinite: false
+                });
 
-        function mouseWheel($slider) {
-            $(window).on('wheel', {
-                $slider: $slider
-            }, mouseWheelHandler);
-        }
-
-        function mouseWheelHandler(event) {
-            var $slider = event.data.$slider;
-            var delta = event.originalEvent.deltaY;
-            if (delta > 0) {
-                $slider.slick('slickNext');
-            } else {
-                $slider.slick('slickPrev');
+            function mouseWheel($slider) {
+                $(window).on('wheel', {
+                    $slider: $slider
+                }, mouseWheelHandler);
             }
-        }
-    } else {
-        var $slider = $(".full-slider");
-        $slider.
-            on('init', function () {
-                mouseWheel($slider);
-            }).
-            slick({
-                dots: true,
-                nav: false,
-                vertical: false,
-                infinite: false
-            });
 
-        function mouseWheel($slider) {
-            $(window).on('wheel', {
-                $slider: $slider
-            }, mouseWheelHandler);
-        }
+            function mouseWheelHandler(event) {
+                var $slider = event.data.$slider;
+                var delta = event.originalEvent.deltaY;
+                var slickObj = $slider.slick('getSlick');
+                var currSlide = slickObj.currentSlide;
+                var slideCount = slickObj.slideCount;
 
-        function mouseWheelHandler(event) {
-            var $slider = event.data.$slider;
-            var delta = event.originalEvent.deltaY;
-            if (delta > 0) {
-                $slider.slick('slickNext');
-            } else {
-                $slider.slick('slickPrev');
+                if (delta > 0) {
+                    if (currSlide < slideCount - 1) {
+                        event.preventDefault();
+                        $slider.slick('slickNext');
+                    }
+                } else {
+                    if (currSlide > 0) {
+                        event.preventDefault();
+                        $slider.slick('slickPrev');
+                    }
+                }
+            }
+        } else {
+            var $slider = $(".full-slider");
+            $slider.
+                on('init', function () {
+                    mouseWheel($slider);
+                }).
+                slick({
+                    dots: true,
+                    nav: false,
+                    vertical: false,
+                    infinite: false
+                });
+
+            function mouseWheel($slider) {
+                $(window).on('wheel', {
+                    $slider: $slider
+                }, mouseWheelHandler);
+            }
+
+            function mouseWheelHandler(event) {
+                var $slider = event.data.$slider;
+                var delta = event.originalEvent.deltaY;
+                var slickObj = $slider.slick('getSlick');
+                var currSlide = slickObj.currentSlide;
+                var slideCount = slickObj.slideCount;
+
+                if (delta > 0) {
+                    if (currSlide < slideCount - 1) {
+                        event.preventDefault();
+                        $slider.slick('slickNext');
+                    }
+                } else {
+                    if (currSlide > 0) {
+                        event.preventDefault();
+                        $slider.slick('slickPrev');
+                    }
+                }
             }
         }
     }
@@ -419,6 +448,7 @@
     });
 
     $('.slide-3').slick({
+        dots: true,
         infinite: true,
         speed: 300,
         slidesToShow: 3,

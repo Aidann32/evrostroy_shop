@@ -8,6 +8,8 @@ from config import settings
 urlpatterns = [
     path('', include('apps.landing.urls')),
     path('admin/', admin.site.urls),
+    path('news/', include('apps.news.urls')),
+    path('catalog/', include('apps.catalog.urls')),
 ]
 
 if settings.DEBUG:

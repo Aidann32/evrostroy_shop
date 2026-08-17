@@ -2031,7 +2031,9 @@ textarea.form-control {
   display: none !important;
 }
 .theme-dots .slick-dots {
-  bottom: 10px;
+  position: relative;
+  bottom: 0;
+  margin-top: 30px;
 }
 .theme-dots .slick-dots li button:before {
   font-size: 12px;
@@ -13657,7 +13659,8 @@ header.stickycls {
     content: "\ee0f";
   }
   .top-header .header-dropdown .mobile-account,
-  .top-header .header-dropdown .mobile-wishlist {
+  .top-header .header-dropdown .mobile-wishlist,
+  .top-header .header-dropdown .mobile-dark-mode {
     position: fixed;
     bottom: 16px;
     right: 32%;
@@ -13694,7 +13697,8 @@ header.stickycls {
   }
   .main-menu .menu-right .icon-nav .mobile-setting,
   .main-menu .menu-right .icon-nav .mobile-cart,
-  .main-menu .menu-right .icon-nav .mobile-search {
+  .main-menu .menu-right .icon-nav .mobile-search,
+  .main-menu .menu-right .icon-nav .mobile-dark-mode {
     position: fixed;
     bottom: 16px;
     right: 16%;
@@ -13703,16 +13707,35 @@ header.stickycls {
   }
   .main-menu .menu-right .icon-nav .mobile-setting .show-div,
   .main-menu .menu-right .icon-nav .mobile-cart .show-div,
-  .main-menu .menu-right .icon-nav .mobile-search .show-div {
+  .main-menu .menu-right .icon-nav .mobile-search .show-div,
+  .main-menu .menu-right .icon-nav .mobile-dark-mode .show-div {
     top: -58px;
     left: 0;
   }
   .main-menu .menu-right .icon-nav .mobile-setting .show-div.shopping-cart,
   .main-menu .menu-right .icon-nav .mobile-cart .show-div.shopping-cart,
-  .main-menu .menu-right .icon-nav .mobile-search .show-div.shopping-cart {
+  .main-menu .menu-right .icon-nav .mobile-search .show-div.shopping-cart,
+  .main-menu .menu-right .icon-nav .mobile-dark-mode .show-div.shopping-cart {
     top: unset;
     bottom: 42px;
     left: -118px !important;
+  }
+  .main-menu .menu-right .icon-nav .mobile-dark-mode {
+    right: 16%;
+  }
+  .main-menu .menu-right .icon-nav .mobile-dark-mode i {
+    display: inline-block;
+    font-size: 22px;
+    color: #999;
+  }
+  .main-menu .menu-right .icon-nav .mobile-setting {
+    right: 36%;
+  }
+  .main-menu .menu-right .icon-nav .mobile-cart {
+    right: 56%;
+  }
+  .main-menu .menu-right .icon-nav .mobile-search {
+    right: 76%;
   }
   .main-menu .menu-right .icon-nav .mobile-setting i {
     display: inline-block;
@@ -13727,9 +13750,6 @@ header.stickycls {
     bottom: 42px;
     left: unset !important;
   }
-  .main-menu .menu-right .icon-nav .mobile-cart {
-    right: 48%;
-  }
   .main-menu .menu-right .icon-nav .mobile-cart .close-circle i {
     font-size: 14px;
   }
@@ -13740,10 +13760,6 @@ header.stickycls {
   }
   .main-menu .menu-right .icon-nav .mobile-cart > div img {
     display: none;
-  }
-  .main-menu .menu-right .icon-nav .mobile-search {
-    right: 80%;
-    z-index: 1;
   }
   .main-menu .menu-right .icon-nav .mobile-search i {
     display: inline-block;
@@ -54445,3 +54461,72 @@ body.dark {
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+.category-block {
+    transition: all 0.3s ease;
+}
+
+.category-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: #ff4c3b !important;
+}
+
+.category-block h3 {
+    transition: all 0.3s ease;
+    margin: 0;
+}
+
+.category-block:hover h3 {
+    color: #ff4c3b;
+}
+
+/* Fix logo in header-2 for mobile */
+.header-2 .brand-logo img,
+.header-2 .layout2-logo img {
+    height: 160px !important;
+    max-height: 160px !important;
+    width: auto !important;
+}
+
+.header-2 .brand-logo,
+.header-2 .layout2-logo {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+@media (max-width: 577px) {
+    .header-2 .brand-logo img,
+    .header-2 .layout2-logo img {
+        height: 90px !important;
+        max-height: 90px !important;
+    }
+    
+    .header-2 .main-menu {
+        position: relative;
+        z-index: 9;
+    }
+
+    .header-2 .menu-left .navbar {
+        position: relative;
+        z-index: 10;
+    }
+    
+    .header-2 .menu-right {
+        position: relative;
+        z-index: 10;
+    }
+    
+    /* Ensure icons are clickable and not overlapped */
+    .header-2 .icon-nav {
+        z-index: 11;
+    }
+    
+    .header-2 .layout2-logo {
+        padding-right: 0 !important;
+        margin: 0 auto !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+}
