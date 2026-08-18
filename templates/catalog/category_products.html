@@ -39,7 +39,7 @@
                                             <div class="basic-product theme-product-1">
                                                 <div class="overflow-hidden">
                                                     <div class="img-wrapper">
-                                                        <a href="product-page(accordian).html">
+                                                        <a href="{% url 'product_page' product.slug %}">
                                                             {% if product.image %}
                                                             <img src="{{ product.image.url }}"
                                                                 class="w-100 img-fluid blur-up lazyload" alt="{{ product.name }}">

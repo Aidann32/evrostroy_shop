@@ -23,3 +23,15 @@ def category_products(request, slug):
         'category': category,
         'products': products,
     })
+
+def product_page(request, slug):
+    product = get_object_or_404(Product.objects.prefetch_related('attributes__attribute'), slug=slug, is_active=True)
+    return render(request, 'catalog/product_page.html', {
+        'product': product,
+    })
+
+def all_categories(request):
+    categories = Category.objects.all()
+    return render(request, 'catalog/categories.html', {
+        'categories': categories,
+    })
