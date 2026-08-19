@@ -4,18 +4,6 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-    <section class="p-0">
-        <div class="slide-1 home-slider">
-            <a href="category-page.html">
-                <img src="../assets/images/furniture-1/full-banner/1.png" alt="" class="img-fluid blur-up lazyload">
-            </a>
-
-            <a href="category-page.html">
-                <img src="../assets/images/furniture-1/full-banner/2.png" alt="" class="img-fluid blur-up lazyload">
-            </a>
-        </div>
-    </section>
-
     <section class="blog blog-2 ratio3_2 slick-default-margin section-b-space mt-0">
         <div class="container">
             <div class="row">
@@ -33,7 +21,7 @@
                                         {% if item.image %}
                                             <img src="{{ item.image.url }}" alt="{{ item.title }}" class="img-fluid blur-up lazyload bg-img">
                                         {% else %}
-                                            <img src="{% static 'img/blog/1.jpg' %}" alt="{{ item.title }}" class="img-fluid blur-up lazyload bg-img">
+                                            <img src="{% static 'img/news_placeholder.png' %}" alt="{{ item.title }}" class="img-fluid blur-up lazyload bg-img">
                                         {% endif %}
                                     </div>
                                     <span></span>
@@ -86,38 +74,38 @@
         </div>
     </section>
 
-    <section class="section-b-space mt-0">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="title1">
-{#                        <h4>наш ассортимент</h4>#}
-                        <h2 class="title-inner1">наши партнеры</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-3">
-                    Партнер 1
-                </div>
-                <div class="col-md-3">
-                    Партнер 1
-                </div>
-                <div class="col-md-3">
-                    Партнер 1
-                </div>
-                <div class="col-md-3">
-                    Партнер 1
-                </div>
-                <div class="col-md-3">
-                    Партнер 1
-                </div>
-                <div class="col-md-3">
-                    Партнер 1
-                </div>
-            </div>
-        </div>
-    </section>
+<!--    <section class="section-b-space mt-0">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-12">-->
+<!--                    <div class="title1">-->
+<!--{#                        <h4>наш ассортимент</h4>#}-->
+<!--                        <h2 class="title-inner1">наши партнеры</h2>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row g-4">-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
 
     <section class="p-0">
         <a href="category-page.html">

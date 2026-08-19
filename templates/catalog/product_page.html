@@ -11,6 +11,7 @@
         <nav class="theme-breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'main' %}">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'all_categories' %}">Категории</a></li>
                 <li class="breadcrumb-item"><a href="{% url 'category_products' product.category.slug %}">{{ product.category.name }}</a></li>
                 <li class="breadcrumb-item active">{{ product.name }}</li>
             </ol>

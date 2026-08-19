@@ -4,5 +4,48 @@
 {% block title %}Все новости{% endblock %}
 
 {% block content %}
-
+    <div class="breadcrumb-section">
+        <div class="container">
+            <h2>Новости</h2>
+            <nav class="theme-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'main' %}">Главная</a></li>
+                    <li class="breadcrumb-item">Новости</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <section class="blog blog-2 ratio3_2 slick-default-margin section-b-space mt-0">
+        <div class="container">
+            <div class="row">
+                {% for item in news %}
+                    <div class="col-md-4" style="margin-top: 5em !important;">
+                            <a href="{{ item.get_absolute_url }}">
+                                <div class="classic-effect">
+                                    <div>
+                                        {% if item.image %}
+                                            <img src="{{ item.image.url }}" alt="{{ item.title }}" class="img-fluid blur-up lazyload bg-img">
+                                        {% else %}
+                                            <img src="{% static 'img/news_placeholder.png' %}" alt="{{ item.title }}" class="img-fluid blur-up lazyload bg-img">
+                                        {% endif %}
+                                    </div>
+                                    <span></span>
+                                </div>
+                            </a>
+                            <div class="blog-details">
+                                <h4>{{ item.published_at|date:"d F Y" }}</h4>
+                                <a href="{{ item.get_absolute_url }}">
+                                    <p>{{ item.title }}</p>
+                                </a>
+                                <h6>{{ item.preview|truncatechars:100 }}</h6>
+                            </div>
+                    </div>
+                {% empty %}
+                        <div class="text-center">
+                            <p>Новостей пока нет.</p>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 {% endblock %}

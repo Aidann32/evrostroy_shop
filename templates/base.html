@@ -23,6 +23,34 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/vendors/themify-icons.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/vendors/bootstrap.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <style>
+        #page-loader {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(255, 255, 255, 0.95); /* полупрозрачный белый фон */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 99999;
+        }
+
+        .loader {
+          width: 52px;
+          height: 52px;
+          border: 5px solid #f3f3f3;
+          border-top: 5px solid #D4B196; /* цвет Multikart */
+          border-radius: 50%;
+          animation: spin 0.75s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 
 <body class="theme-color-5">
@@ -32,262 +60,13 @@
         }
     </script>
     <div class="loader_skeleton">
-        <div class="top-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="header-contact">
-                            <ul>
-                                <li>Еврострой</li>
-                                <li><i class="ri-phone-fill"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 text-end">
-                        <ul class="header-dropdown">
-                            <li class="mobile-wishlist">
-                                <a href="#!">
-                                    <i class="ri-heart-fill"></i>
-                                </a>
-                            </li>
-                            <li class="onhover-dropdown mobile-account">
-                                <i class="ri-user-fill"></i>
-                                My Account
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <div id="page-loader">
+          <div class="loader"></div>
         </div>
-        <header>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="main-menu">
-                            <div class="menu-left">
-                                <div class="navbar">
-                                    <a href="#!">
-                                        <div class="bar-style">
-                                            <i class="ri-bar-chart-horizontal-line sidebar-bar"></i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="brand-logo">
-                                    <a href="index.html">
-                                        <img src="../assets/images/logo.png" class="img-fluid blur-up lazyload" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="menu-right pull-right">
-                                <div>
-                                    <nav>
-                                        <div class="toggle-nav"><i class="ri-bar-chart-horizontal-line sidebar-bar"></i>
-                                        </div>
-                                        <ul class="sm pixelstrap sm-horizontal">
-                                            <li>
-                                                <div class="mobile-back text-end">Back<i
-                                                        class="fa fa-angle-right ps-2"></i>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a href="index.html">Главная</a>
-                                            </li>
-                                            <li>
-                                                <a href="#!">Магазин</a>
-                                            </li>
-                                            <li>
-                                                <a href="#!">Новости</a>
-                                            </li>
-                                            <li>
-                                                <a href="#!">Контакты</a>
-                                            </li>
-                                            <li><a href="#!">О нас</a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                                <div>
-                                    <div class="icon-nav d-none d-sm-block">
-                                        <ul>
-                                            <li class="onhover-div mobile-search">
-                                                <div>
-                                                    <i class="ri-search-line"></i>
-                                                </div>
-                                            </li>
-                                            <li class="onhover-div mobile-setting">
-                                                <div>
-                                                    <i class="ri-equalizer-2-line"></i>
-                                                </div>
-                                            </li>
-                                            <li class="onhover-div mobile-cart">
-                                                <div>
-                                                    <i class="ri-shopping-cart-line"></i>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
     </div>
     {% include '_partial/navbar.html' %}
     {% block content %} {% endblock %}
     {% include '_partial/footer.html' %}
-
-    <!-- Quick View modal popup start-->
-    <div class="modal fade theme-modal-2 quick-view-modal" id="quickView">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal">
-                    <i class="ri-close-line"></i>
-                </button>
-                <div class="modal-body">
-                    <div class="wrap-modal-slider">
-                        <div class="row g-sm-4 g-3">
-                            <div class="col-lg-6">
-                                <div class="row g-3">
-                                    <div class="col-12">
-                                        <div class="view-main-slider">
-                                            <div>
-                                                <img src="../assets/images/fashion-1/product/1.jpg" class="img-fluid"
-                                                    alt="">
-                                            </div>
-                                            <div>
-                                                <img src="../assets/images/fashion-1/product/1-1.jpg" class="img-fluid"
-                                                    alt="">
-                                            </div>
-                                            <div>
-                                                <img src="../assets/images/fashion-1/product/1-2.jpg" class="img-fluid"
-                                                    alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="view-thumbnail-slider no-arrow">
-                                            <div>
-                                                <div class="slider-image">
-                                                    <img src="../assets/images/fashion-1/product/1.jpg"
-                                                        class="img-fluid" alt="">
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="slider-image">
-                                                    <img src="../assets/images/fashion-1/product/1-1.jpg"
-                                                        class="img-fluid" alt="">
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="slider-image">
-                                                    <img src="../assets/images/fashion-1/product/1-2.jpg"
-                                                        class="img-fluid" alt="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="right-sidebar-modal">
-                                    <a class="name" href="product-page(accordian).html">Boyfriend Shirts</a>
-                                    <div class="product-rating">
-                                        <ul class="rating-list">
-                                            <li>
-                                                <i class="ri-star-line"></i>
-                                            </li>
-                                            <li>
-                                                <i class="ri-star-line"></i>
-                                            </li>
-                                            <li>
-                                                <i class="ri-star-line"></i>
-                                            </li>
-                                            <li>
-                                                <i class="ri-star-line"></i>
-                                            </li>
-                                            <li>
-                                                <i class="ri-star-line"></i>
-                                            </li>
-                                        </ul>
-                                        <div class="divider">|</div>
-                                        <a href="#!">0 Review</a>
-                                    </div>
-                                    <div class="price-text">
-                                        <h3>
-                                            <span class="fw-normal">MRP:</span>
-                                            $10.56
-                                            <del>$12.00</del>
-                                            <span class="discounted-price">12% off</span>
-                                        </h3>
-                                        <span class="text">Inclusive all the text</span>
-                                    </div>
-                                    <p class="description-text">Boyfriend shirts are oversized, relaxed-fit shirts
-                                        originally inspired by men's fashion. They offer a comfortable and effortlessly
-                                        chic look, often characterized by a loose silhouette and rolled-up sleeves.
-                                        Perfect for a casual yet stylish vibe</p>
-                                    <div class="variation-box size-box my-3">
-                                        <h4 class="sub-title">Size :</h4>
-                                        <ul class="quantity-variant custom-variations circle d-inline-flex">
-                                            <li class="active">
-                                                <button type="button" class=""> S </button>
-                                            </li>
-
-                                            <li>
-                                                <button type="button"> M </button>
-                                            </li>
-
-                                            <li>
-                                                <button type="button"> L </button>
-                                            </li>
-
-                                            <li>
-                                                <button type="button"> XL </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="qty-box">
-                                        <div class="input-group qty-container">
-                                            <button class="btn qty-btn-minus">
-                                                <i class="ri-arrow-left-s-line"></i>
-                                            </button>
-                                            <input type="number" readonly="" name="qty" class="form-control input-qty"
-                                                value="1">
-                                            <button class="btn qty-btn-plus">
-                                                <i class="ri-arrow-right-s-line"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="product-buy-btn-group">
-                                        <button
-                                            class="btn btn-animation btn-solid buy-button hover-solid scroll-button">
-                                            <i class="ri-shopping-cart-line me-1"></i>
-                                            Add To Cart
-                                        </button>
-                                        <button class="btn btn-solid buy-button">Buy Now</button>
-                                    </div>
-
-                                    <div class="buy-box compare-box">
-                                        <a href="#!">
-                                            <i class="ri-heart-line"></i>
-                                            <span>Add To Wishlist</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i class="ri-refresh-line"></i>
-                                            <span>Add To Compare</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Quick View modal popup end-->
 
 
     <!-- Add to cart modal popup start-->
@@ -410,268 +189,26 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title fs-5">Search in store</h3>
+                    <h3 class="modal-title fs-5">Искать в магазине</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal">
                         <i class="ri-close-line"></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="search-input-box">
-                        <input type="text" class="form-control" placeholder="Search with brands and categories...">
-                        <i class="ri-search-2-line"></i>
-                    </div>
-
-                    <ul class="search-category">
-                        <li class="category-title">Top search:</li>
-                        <li>
-                            <a href="category-page.html">Baby Essentials</a>
-                        </li>
-                        <li>
-                            <a href="category-page.html">Bag Emporium</a>
-                        </li>
-                        <li>
-                            <a href="category-page.html">Bags</a>
-                        </li>
-                        <li>
-                            <a href="category-page.html">Books</a>
-                        </li>
-                    </ul>
-
-                    <div class="search-product-box mt-sm-4 mt-3">
-                        <h3 class="search-title">Most Searched</h3>
-
-                        <div class="row row-cols-xl-4 row-cols-md-3 row-cols-2 g-sm-4 g-3">
-                            <div class="col">
-                                <div class="basic-product theme-product-1">
-                                    <div class="overflow-hidden">
-                                        <div class="img-wrapper">
-                                            <div class="ribbon"><span>Exclusive</span></div>
-                                            <a href="product-page(image-swatch).html">
-                                                <img src="../assets/images/fashion-1/product/1.jpg"
-                                                    class="img-fluid blur-up lazyloaded" alt="">
-                                            </a>
-                                            <div class="rating-label"><i class="ri-star-fill"></i><span>2.5</span>
-                                            </div>
-                                            <div class="cart-info">
-                                                <a href="#!" title="Add to Wishlist" class="wishlist-icon">
-                                                    <i class="ri-heart-line"></i>
-                                                </a>
-                                                <button data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas"
-                                                    title="Add to cart">
-                                                    <i class="ri-shopping-cart-line"></i>
-                                                </button>
-                                                <a href="#quickView" data-bs-toggle="modal" title="Quick View">
-                                                    <i class="ri-eye-line"></i>
-                                                </a>
-                                                <a href="compare.html" title="Compare">
-                                                    <i class="ri-loop-left-line"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-detail">
-                                            <div>
-                                                <div class="brand-w-color">
-                                                    <a class="product-title" href="product-page(accordian).html">
-                                                        Glamour Gaze
-                                                    </a>
-                                                    <div class="color-panel">
-                                                        <ul>
-                                                            <li style="background-color: papayawhip;"></li>
-                                                            <li style="background-color: burlywood;"></li>
-                                                            <li style="background-color: gainsboro;"></li>
-                                                        </ul>
-                                                        <span>+2</span>
-                                                    </div>
-                                                </div>
-                                                <h6>Boyfriend Shirts</h6>
-                                                <h4 class="price">$ 2.79<del> $3.00 </del><span
-                                                        class="discounted-price"> 7%
-                                                        Off
-                                                    </span>
-                                                </h4>
-                                            </div>
-                                            <ul class="offer-panel">
-                                                <li>
-                                                    <span class="offer-icon">
-                                                        <i class="ri-discount-percent-fill"></i>
-                                                    </span>
-                                                    Limited Time Offer: 4% off
-                                                </li>
-                                                <li><span class="offer-icon"><i
-                                                            class="ri-discount-percent-fill"></i></span>
-                                                    Limited Time Offer: 4% off</li>
-                                                <li><span class="offer-icon"><i
-                                                            class="ri-discount-percent-fill"></i></span>
-                                                    Limited Time Offer: 4% off</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="basic-product theme-product-1">
-                                    <div class="overflow-hidden">
-                                        <div class="img-wrapper">
-                                            <a href="product-page(accordian).html"><img
-                                                    src="../assets/images/fashion-1/product/11.jpg"
-                                                    class="img-fluid blur-up lazyloaded" alt=""></a>
-                                            <div class="rating-label"><i class="fa fa-star"></i>
-                                                <span>6.5</span>
-                                            </div>
-                                            <div class="cart-info">
-                                                <a href="#!" title="Add to Wishlist" class="wishlist-icon">
-                                                    <i class="ri-heart-line"></i>
-                                                </a>
-                                                <button data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas"
-                                                    title="Add to cart">
-                                                    <i class="ri-shopping-cart-line"></i>
-                                                </button>
-                                                <a href="#quickView" data-bs-toggle="modal" title="Quick View">
-                                                    <i class="ri-eye-line"></i>
-                                                </a>
-                                                <a href="compare.html" title="Compare">
-                                                    <i class="ri-loop-left-line"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-detail">
-                                            <div>
-                                                <div class="brand-w-color">
-                                                    <a class="product-title" href="product-page(accordian).html">
-                                                        VogueVista
-                                                    </a>
-                                                </div>
-                                                <h6>Chic Crop Top</h6>
-                                                <h4 class="price">$ 5.60<del> $6.80 </del><span
-                                                        class="discounted-price"> 5%
-                                                        Off
-                                                    </span>
-                                                </h4>
-                                            </div>
-                                            <ul class="offer-panel">
-                                                <li><span class="offer-icon"><i
-                                                            class="ri-discount-percent-fill"></i></span>
-                                                    Limited Time Offer: 25% off</li>
-                                                <li><span class="offer-icon"><i
-                                                            class="ri-discount-percent-fill"></i></span>
-                                                    Limited Time Offer: 25% off</li>
-                                                <li><span class="offer-icon"><i
-                                                            class="ri-discount-percent-fill"></i></span>
-                                                    Limited Time Offer: 25% off</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="basic-product theme-product-1">
-                                    <div class="overflow-hidden">
-                                        <div class="img-wrapper">
-                                            <a href="product-page(accordian).html"><img
-                                                    src="../assets/images/fashion-1/product/15.jpg"
-                                                    class="img-fluid blur-up lazyloaded" alt=""></a>
-                                            <div class="rating-label"><i class="fa fa-star"></i>
-                                                <span>3.7</span>
-                                            </div>
-                                            <div class="cart-info">
-                                                <a href="#!" title="Add to Wishlist" class="wishlist-icon">
-                                                    <i class="ri-heart-line"></i>
-                                                </a>
-                                                <button data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas"
-                                                    title="Add to cart">
-                                                    <i class="ri-shopping-cart-line"></i>
-                                                </button>
-                                                <a href="#quickView" data-bs-toggle="modal" title="Quick View">
-                                                    <i class="ri-eye-line"></i>
-                                                </a>
-                                                <a href="compare.html" title="Compare">
-                                                    <i class="ri-loop-left-line"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-detail">
-                                            <div>
-                                                <div class="brand-w-color">
-                                                    <a class="product-title" href="product-page(accordian).html">
-                                                        Urban Chic
-                                                    </a>
-                                                </div>
-                                                <h6>Classic Jacket</h6>
-                                                <h4 class="price">$ 3.80 </h4>
-                                            </div>
-                                            <ul class="offer-panel">
-                                                <li><span class="offer-icon"><i
-                                                            class="ri-discount-percent-fill"></i></span>
-                                                    Limited Time Offer: 10% off</li>
-                                                <li><span class="offer-icon"><i
-                                                            class="ri-discount-percent-fill"></i></span>
-                                                    Limited Time Offer: 10% off</li>
-                                                <li><span class="offer-icon"><i
-                                                            class="ri-discount-percent-fill"></i></span>
-                                                    Limited Time Offer: 10% off</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="basic-product theme-product-1">
-                                    <div class="overflow-hidden">
-                                        <div class="img-wrapper">
-                                            <a href="product-page(image-swatch).html">
-                                                <img src="../assets/images/fashion-1/product/16.jpg"
-                                                    class="img-fluid blur-up lazyloaded" alt="">
-                                            </a>
-                                            <div class="rating-label"><i class="fa fa-star"></i>
-                                                <span>8.7</span>
-                                            </div>
-                                            <div class="cart-info">
-                                                <a href="#!" title="Add to Wishlist" class="wishlist-icon">
-                                                    <i class="ri-heart-line"></i>
-                                                </a>
-                                                <button data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas"
-                                                    title="Add to cart">
-                                                    <i class="ri-shopping-cart-line"></i>
-                                                </button>
-                                                <a href="#quickView" data-bs-toggle="modal" title="Quick View">
-                                                    <i class="ri-eye-line"></i>
-                                                </a>
-                                                <a href="compare.html" title="Compare">
-                                                    <i class="ri-loop-left-line"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-detail">
-                                            <div>
-                                                <div class="brand-w-color">
-                                                    <a class="product-title" href="product-page(accordian).html">
-                                                        Couture Edge
-                                                    </a>
-                                                </div>
-                                                <h6>Versatile Shacket</h6>
-                                                <h4 class="price"> $3.00
-                                                </h4>
-                                            </div>
-                                            <ul class="offer-panel">
-                                                <li><span class="offer-icon"><i
-                                                            class="ri-discount-percent-fill"></i></span>
-                                                    Limited Time Offer: 12% off</li>
-                                                <li><span class="offer-icon"><i
-                                                            class="ri-discount-percent-fill"></i></span>
-                                                    Limited Time Offer: 12% off</li>
-                                                <li><span class="offer-icon"><i
-                                                            class="ri-discount-percent-fill"></i></span>
-                                                    Limited Time Offer: 12% off</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <form method="get" class="search-form" action="{% url 'product_list' %}">
+                        <div class="input-group">
+                            <input type="text"
+                                   name="q"
+                                   class="form-control"
+                                   placeholder="Поиск по названию или бренду..."
+                                   value="{{ request.GET.q }}"
+                                   required
+                                   autofocus>
+                            <button class="btn btn-solid" type="submit">
+                              <i class="fa fa-search"></i> Найти
+                            </button>
+                          </div>
+                    </form>
                 </div>
             </div>
         </div>
