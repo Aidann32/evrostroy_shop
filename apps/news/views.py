@@ -4,5 +4,5 @@ from .models import News
 def detail(request, slug):
     pass
 
-def all_news(request):
+def news_list(request):
     return render(request, 'news/all_news.html', {'news': News.objects.filter(is_published=True)})

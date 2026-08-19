@@ -1,5 +1,6 @@
 {% load static %}
-<header id="sticky-header" class="header-2">
+<!--<header id="sticky-header" class="header-2">-->
+<header class="header-2">
     <div class="mobile-fix-option"></div>
     <div class="top-header top-header-dark">
         <div class="container">
@@ -38,7 +39,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="brand-logo layout2-logo">
+                    <div class="brand-logo">
                         <a href="{% url 'main' %}"><img src="{% static 'img/logo.png' %}" class="img-fluid blur-up lazyload" alt=""></a>
                     </div>
                     <div class="menu-right pull-right">
@@ -110,7 +111,7 @@
                                 <a href="{% url 'all_categories' %}">Магазин </a>
                             </li>
                             <li>
-                                <a href="{% url 'all_news' %}">Новости</a>
+                                <a href="{% url 'news:list' %}">Новости</a>
                             </li>
                             <li><a href="index.html">Контакты</a></li>
                             <li><a href="index.html">О нас</a></li>
