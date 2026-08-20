@@ -2038,7 +2038,7 @@
         $.notify({
             icon: 'ri-check-line',
             title: false,
-            message: 'Product added Successfully.'
+            message: 'Товар успешно добавлен'
         }, {
             element: 'body',
             position: null,

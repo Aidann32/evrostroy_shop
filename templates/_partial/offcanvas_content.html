@@ -1,0 +1,80 @@
+{% load static %}
+
+{% if cart %}
+    <div class="sidebar-title">
+        <a href="#!" id="clear-cart-btn" data-url="{% url 'cart:clear' %}">Очистить корзину</a>
+    </div>
+
+    <div class="cart-media">
+        <ul class="cart-product">
+            {% for item in cart %}
+            <li data-product-id="{{ item.product.id }}">
+                <div class="media">
+                    <a href="{{ item.product.get_absolute_url }}">
+                        {% if item.image %}
+                            <img src="{{ item.image }}" class="img-fluid" alt="{{ item.name }}">
+                        {% else %}
+                            <img src="{% static 'img/product_placeholder.png' %}" class="img-fluid" alt="">
+                        {% endif %}
+                    </a>
+
+                    <div class="media-body">
+                        <a href="{{ item.product.get_absolute_url }}">
+                            <h4>{{ item.name }}</h4>
+                        </a>
+
+                        <h4 class="quantity">
+                            <span class="item-price-line">{{ item.quantity }} × {{ item.price }} ₸</span>
+                        </h4>
+
+                        <div class="qty-box">
+                            <div class="input-group qty-container">
+                                <button class="btn qty-btn-minus cart-qty-btn"
+                                        data-url="{% url 'cart:update' item.product.id %}"
+                                        data-action="decrease">
+                                    <i class="ri-subtract-line"></i>
+                                </button>
+                                <input type="number" readonly class="form-control input-qty"
+                                       value="{{ item.quantity }}">
+                                <button class="btn qty-btn-plus cart-qty-btn"
+                                        data-url="{% url 'cart:update' item.product.id %}"
+                                        data-action="increase">
+                                    <i class="ri-add-line"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="close-circle">
+                            <button class="close_button delete-button cart-remove-btn"
+                                    data-url="{% url 'cart:remove' item.product.id %}">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <ul class="cart_total">
+            <li>
+                <div class="total">
+                    <h5>Итого: <span id="cart-total-price">{{ cart.get_total_price }} ₸</span></h5>
+                </div>
+            </li>
+            <li>
+                <div class="buttons">
+
+                </div>
+            </li>
+        </ul>
+    </div>
+{% else %}
+    <div class="text-center py-5">
+        <h5>Корзина пуста</h5>
+        <p class="mt-2">Добавьте товары, чтобы продолжить</p>
+        <button class="btn btn-solid mt-3" data-bs-dismiss="offcanvas">
+            Продолжить покупки
+        </button>
+    </div>
+{% endif %}

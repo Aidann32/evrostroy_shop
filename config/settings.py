@@ -36,6 +36,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CART_SESSION_ID = 'cart'
+
 
 # Application definition
 
@@ -79,6 +81,7 @@ TEMPLATES = [
                 'django.template.context_processors.media',
 
                 'apps.landing.context_processors.navbar',
+                'apps.cart.context_processors.cart',
             ],
         },
     },
