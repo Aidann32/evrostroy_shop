@@ -34,6 +34,10 @@ SECRET_KEY = 'django-insecure-53dh0u!x&k6jt@af3meui6p+m(3%ldh3lof^r0^mtyc6o+7$q2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.ngrok-free.app',
+    'https://*.ngrok.io',
+]
 ALLOWED_HOSTS = ['*']
 
 CART_SESSION_ID = 'cart'
