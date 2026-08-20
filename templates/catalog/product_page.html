@@ -54,15 +54,23 @@
                             <div class="qty-section">
                                 <div class="qty-box">
                                     <div class="input-group">
-                                        <input type="text" name="quantity" class="form-control input-number"
-                                            value="1">
+                                        <input type="number"
+                                               name="quantity"
+                                               id="product-quantity"
+                                               class="form-control input-number"
+                                               value="1"
+                                               min="1">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="d-flex align-items-center gap-3">
-                                <button class="btn btn-animation btn-solid hover-solid scroll-button" type="button">
-                                    <i class="ri-shopping-cart-line me-1"></i>В корзину</button>
+                                <button class="btn btn-animation btn-solid hover-solid scroll-button add-to-cart-btn"
+                                        type="button"
+                                        data-url="{% url 'cart:add' product.id %}">
+                                    <i class="ri-shopping-cart-line me-1"></i>
+                                    В корзину
+                                </button>
                             </div>
                         </div>
                         <div class="buy-box">
@@ -117,4 +125,55 @@
         </div>
     </section>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const addBtn = document.querySelector('.add-to-cart-btn');
+    if (!addBtn) return;
+
+    addBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const url = this.dataset.url;
+        const quantityInput = document.getElementById('product-quantity');
+        const quantity = quantityInput ? quantityInput.value : 1;
+
+        this.disabled = true;
+        const originalText = this.innerHTML;
+        this.innerHTML = '<i class="ri-loader-4-line me-1"></i> Добавление...';
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken,
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `quantity=${quantity}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateCartUI(data);
+
+                const offcanvasEl = document.getElementById('cartOffcanvas');
+                if (offcanvasEl) {
+                    const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
+                    offcanvas.show();
+                }
+            }
+        })
+        .catch(err => {
+            console.error('Ошибка:', err);
+            alert('Не удалось добавить товар в корзину');
+        })
+        .finally(() => {
+            this.disabled = false;
+            this.innerHTML = originalText;
+        });
+    });
+});
+</script>
 {% endblock %}
