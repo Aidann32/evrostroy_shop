@@ -9,3 +9,9 @@ def main(request):
         'news': news,
         'categories': categories,
     })
+
+def about(request):
+    return render(request, 'landing/about.html')
+
+def contact(request):
+    return render(request, 'landing/contact.html')

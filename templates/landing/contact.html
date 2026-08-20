@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Контакты{% endblock %}
+
+
+{% block content %}
+    <div class="breadcrumb-section">
+        <div class="container">
+            <h2>Контакты</h2>
+            <nav class="theme-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'main' %}">Главная</a>
+                    </li>
+                    <li class="breadcrumb-item active">Контакты</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!--contact section start-->
+    <section class="contact-page">
+        <div class="container">
+            <div class="row g-sm-4 g-3">
+                <div class="col-lg-5">
+                    <div class="contact-title">
+                        <h2>Get In Touch</h2>
+                        <p>We're here to help! Reach out to us with any questions, feedback, or inquiries, and we'll get
+                            back to you as soon as possible.</p>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <form class="theme-form contact-form">
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="form-box">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" id="name" class="form-control" placeholder="Full Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-box">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" class="form-control" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-box">
+                                    <label for="review">Phone</label>
+                                    <input type="number" id="review" class="form-control"
+                                        placeholder="Enter Your Phone Number">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-box">
+                                    <label for="email">Subject</label>
+                                    <input type="text" id="last-name" class="form-control" placeholder="Subject">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-box">
+                                    <label for="review">Write Your Message</label>
+                                    <textarea rows="6" class="form-control" placeholder="Write Your Message"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-box">
+                                    <button class="btn btn-solid" type="button">Send Your Message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12">
+                    <div class="contact-right">
+                        <ul>
+                            <li>
+                                <div class="contact-icon">
+                                    <i class="ri-phone-fill"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h6>Contact Us</h6>
+                                    <p>+91 123 - 456 - 7890</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="contact-icon">
+                                    <i class="ri-map-pin-fill"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h6>Address</h6>
+                                    <p>ABC Complex,Near xyz, New York</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="contact-icon">
+                                    <i class="ri-mail-fill"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h6>Email</h6>
+                                    <p>support@multikart.com</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="contact-icon">
+                                    <i class="ri-cellphone-fill"></i>
+                                </div>
+                                <div class="media-body">
+                                    <h6>Fax</h6>
+                                    <p>support@multikart.com</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--contact section ends-->
+
+
+    <!-- map section start -->
+    <section class="map-section">
+        <div class="container">
+            <h2>Мы в 2ГИС</h2>
+            <iframe id="map_301451478" frameborder="0" width="100%" height="400px" src="https://makemap.2gis.ru/widget?data=eJw1j01vgkAQhv_L9FhiltWFhcSDwZRqjIFe-hUPREa7ycqSZay1xP_eEe0c5_3I8_bgfI0e6xzdAckb7CD97IHOLUIKT1jR0SME0HrXoqdB72HrrPOsPwipw51knQzZa0Is38qO8plYxS_7Os_E-7z8pkyxpcZu601LxjVsLJ5nj2I5Lrt1vlisMy1W87JLspNY7crjOkuKLDkV--mUg7-LpsYfSEPxf5cA9jfg8xXnTls40xD7t45HmaaiYYyKR1KEehIGSoxkMom13nDe1JBG3LQJ4FC1hevMDawHWxGkd2-i40iFcSR1APYqD20ykhOhpYrUOFTM59yB6TS38kJn7esXov0YvuSPePkDShxsew" sandbox="allow-modals allow-forms allow-scripts allow-same-origin allow-popups allow-top-navigation-by-user-activation"></iframe>
+        </div>
+    </section>
+    <!-- map section End -->
+{% endblock %}
