@@ -62,11 +62,15 @@
                     <h5>Итого: <span id="cart-total-price">{{ cart.get_total_price }} ₸</span></h5>
                 </div>
             </li>
-            <li>
+           <li>
                 <div class="buttons">
-
+                    <button type="button"
+                            class="btn btn-solid w-100"
+                            id="open-checkout-btn">
+                        Оформить заказ
+                    </button>
                 </div>
-            </li>
+           </li>
         </ul>
     </div>
 {% else %}

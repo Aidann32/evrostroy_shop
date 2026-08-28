@@ -179,18 +179,24 @@
         const csrftoken = getCookie('csrftoken');
 
         function updateCartUI(data) {
-            // Обновляем содержимое offcanvas
             const body = document.getElementById('cart-offcanvas-body');
-            if (body) body.innerHTML = data.cart_html;
+            if (body && data.cart_html) {
+                body.innerHTML = data.cart_html;
+            }
 
-            // Обновляем счётчик в заголовке offcanvas
-            const titleCount = document.getElementById('cart-count-title');
-            if (titleCount) titleCount.textContent = `(${data.cart_length})`;
-
-            // Обновляем счётчик в шапке сайта
             document.querySelectorAll('.cart_qty_cls').forEach(el => {
-                el.textContent = data.cart_length;
+                el.textContent = data.cart_length ?? 0;
             });
+
+            const titleCount = document.getElementById('cart-count-title');
+            if (titleCount) {
+                titleCount.textContent = `(${data.cart_length ?? 0})`;
+            }
+
+            const checkoutTotal = document.getElementById('checkout-total');
+            if (checkoutTotal) {
+                checkoutTotal.textContent = `${data.cart_total ?? 0} ₸`;
+            }
         }
 
         // Увеличение / уменьшение количества
@@ -260,7 +266,39 @@
                 if (data.success) updateCartUI(data);
             });
         });
+
+        document.addEventListener('click', function (e) {
+            const btn = e.target.closest('#open-checkout-btn');
+            if (!btn) return;
+
+            e.preventDefault();
+
+            // 1. Закрываем offcanvas
+            const offcanvasEl = document.getElementById('cartOffcanvas');
+            if (offcanvasEl) {
+                const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
+                if (offcanvas) offcanvas.hide();
+            }
+
+            // 2. После закрытия открываем модалку
+            setTimeout(() => {
+                const modalEl = document.getElementById('checkoutModal');
+                if (modalEl) {
+                    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                    modal.show();
+                }
+            }, 300);
+        });
     </script>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
     <div class="loader_skeleton">
         <div id="page-loader">
           <div class="loader"></div>
@@ -333,6 +371,57 @@
     <!-- Cart Offcanvas End -->
 
 
+    <div class="modal fade theme-modal" id="checkoutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Оформление заказа</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+
+                <form id="checkout-form" method="post" action="{% url 'orders:checkout' %}">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Телефон *</label>
+                            <input type="tel"
+                                   name="phone"
+                                   id="phone-input"
+                                   class="form-control"
+                                   placeholder="+7 (___) ___-__-__"
+                                   maxlength="18"
+                                   required>
+                            <div class="invalid-feedback" id="phone-error">
+                                Введите корректный казахстанский номер
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Комментарий к заказу</label>
+                            <textarea name="comment" class="form-control" rows="3"
+                                      placeholder="Адрес, пожелания и т.д."></textarea>
+                        </div>
+
+                        <div class="alert alert-light mb-0">
+                            <strong>Итого к оплате:</strong>
+                            <span id="checkout-total">0 ₸</span>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-solid" id="checkout-submit-btn">
+                            Подтвердить заказ
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <!-- tap to top start -->
     <div class="tap-top">
         <div>
@@ -360,6 +449,105 @@
         function closeSearch() {
             document.getElementById("search-overlay").style.display = "none";
         }
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const phoneInput = document.getElementById('phone-input');
+        const form = document.getElementById('checkout-form');
+        const phoneError = document.getElementById('phone-error');
+
+        if (!phoneInput || !form) return;
+
+        // Маска: +7 (___) ___-__-__
+        phoneInput.addEventListener('input', function (e) {
+            let value = this.value.replace(/\D/g, ''); // только цифры
+
+            // Если начинают с 8 — меняем на 7
+            if (value.startsWith('8')) {
+                value = '7' + value.slice(1);
+            }
+
+            // Если пусто или не с 7 — ставим 7
+            if (value && !value.startsWith('7')) {
+                value = '7' + value;
+            }
+
+            // Ограничиваем 11 цифр (7 + 10)
+            value = value.substring(0, 11);
+
+            let formatted = '+7';
+
+            if (value.length > 1) {
+                formatted += ' (' + value.substring(1, 4);
+            }
+            if (value.length >= 4) {
+                formatted += ') ' + value.substring(4, 7);
+            }
+            if (value.length >= 7) {
+                formatted += '-' + value.substring(7, 9);
+            }
+            if (value.length >= 9) {
+                formatted += '-' + value.substring(9, 11);
+            }
+
+            this.value = formatted;
+            this.classList.remove('is-invalid');
+        });
+
+        // При фокусе сразу подставляем +7 (
+        phoneInput.addEventListener('focus', function () {
+            if (!this.value) {
+                this.value = '+7 (';
+            }
+        });
+
+        // Валидация казахстанского номера
+        function isValidKZPhone(value) {
+            const digits = value.replace(/\D/g, '');
+
+            // Должно быть 11 цифр и начинаться с 7
+            if (digits.length !== 11 || !digits.startsWith('7')) {
+                return false;
+            }
+
+            // Код оператора (следующие 3 цифры после 7)
+            const operatorCode = digits.substring(1, 4);
+
+            // Актуальные коды мобильных операторов РК
+            const validCodes = [
+                '700', '701', '702', '703', '704', '705', '706', '707', '708', '709',
+                '747', '750', '751', '760', '761', '762', '763', '764',
+                '771', '775', '776', '777', '778'
+            ];
+
+            return validCodes.includes(operatorCode);
+        }
+
+        form.addEventListener('submit', function (e) {
+            const phone = phoneInput.value;
+
+            if (!isValidKZPhone(phone)) {
+                e.preventDefault();
+                phoneInput.classList.add('is-invalid');
+                if (phoneError) {
+                    phoneError.style.display = 'block';
+                }
+                phoneInput.focus();
+                return false;
+            }
+
+            // Убираем ошибку
+            phoneInput.classList.remove('is-invalid');
+
+            // Блокируем кнопку, чтобы не отправили дважды
+            const btn = document.getElementById('checkout-submit-btn');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = 'Оформляем...';
+            }
+        });
+    });
     </script>
 
     {% block extra_js %}
