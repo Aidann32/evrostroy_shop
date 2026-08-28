@@ -38,6 +38,9 @@ ALLOWED_HOSTS = ['*']
 
 CART_SESSION_ID = 'cart'
 
+# Яндекс.Метрика
+YANDEX_METRIKA_ID = '98765432'
+
 
 # Application definition
 
@@ -82,6 +85,7 @@ TEMPLATES = [
 
                 'apps.landing.context_processors.navbar',
                 'apps.cart.context_processors.cart',
+                'apps.landing.context_processors.yandex_metrika',
             ],
         },
     },
