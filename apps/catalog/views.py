@@ -1,5 +1,8 @@
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
+
+from urllib.parse import quote
+
 from .models import Product, Category
 
 def product_list(request):
@@ -26,8 +29,14 @@ def category_products(request, slug):
 
 def product_page(request, slug):
     product = get_object_or_404(Product.objects.prefetch_related('attributes__attribute'), slug=slug, is_active=True)
+    product_url = request.build_absolute_uri(product.get_absolute_url())
+    message = (
+        f"Здравствуйте, пишу из сайта Еврострой, "
+        f"у меня есть вопрос по данному товару: {product_url}"
+    )
     return render(request, 'catalog/product_page.html', {
         'product': product,
+        'whatsapp_text': quote(message),
     })
 
 def all_categories(request):
