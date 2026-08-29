@@ -9,6 +9,10 @@ from apps.catalog.sitemaps import ProductSitemap, CategorySitemap
 
 from config import settings
 
+admin.site.site_header = "Еврострой - панель управления"
+admin.site.site_title = "Админка"
+admin.site.index_title = "Добро пожаловать в админ-панель"
+
 sitemaps = {
     'products': ProductSitemap,
     'categories': CategorySitemap,
