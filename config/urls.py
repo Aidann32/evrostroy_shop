@@ -3,8 +3,16 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 from django.views.generic import TemplateView
+from django.contrib.sitemaps.views import sitemap
+
+from apps.catalog.sitemaps import ProductSitemap, CategorySitemap
 
 from config import settings
+
+sitemaps = {
+    'products': ProductSitemap,
+    'categories': CategorySitemap,
+}
 
 urlpatterns = [
     path('', include('apps.landing.urls')),
@@ -13,6 +21,8 @@ urlpatterns = [
     path('catalog/', include('apps.catalog.urls')),
     path('cart/', include('apps.cart.urls', namespace='cart')),
     path('orders/', include('apps.orders.urls')),
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 if settings.DEBUG:

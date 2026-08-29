@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block title %}
-    {% if query %}
-        Результаты поиска
-    {% else %}
-        {{ category.name }}
-    {% endif %}
+    {% if query %}Поиск: {{ query }} — Еврострой{% else %}{{ category.name }}{% endif %}
+{% endblock %}
+
+{% block meta_description %}
+    Каталог дверей, плитки и отделочных материалов. Выберите товар и оформите заказ онлайн.
 {% endblock %}
 
 {% block content %}
