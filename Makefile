@@ -36,3 +36,9 @@ db-shell:
 
 clean:
 	sudo docker compose down -v
+
+import-products-dry:
+	sudo docker compose exec web python manage.py import_products /app/data/краски.xlsx --images-dir /app/data/product_images --dry-run
+
+import-products:
+	sudo docker compose exec web python manage.py import_products /app/data/panels.xlsx --images-dir /app/data/panel_images

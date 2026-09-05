@@ -2,9 +2,15 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+from unidecode import unidecode
+
+
+def make_slug(text):
+    return slugify(unidecode(text)) or 'item'
+
 class Brand(models.Model):
     name = models.CharField('Бренд', max_length=100, unique=True)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
 
     class Meta:
         verbose_name = 'Бренд'
@@ -13,7 +19,7 @@ class Brand(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = make_slug(self.name)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -21,7 +27,7 @@ class Brand(models.Model):
 
 class Category(models.Model):
     name = models.CharField('Категория', max_length=100)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
 
     class Meta:
         verbose_name = 'Категория'
@@ -30,7 +36,7 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = make_slug(self.name)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -39,7 +45,7 @@ class Category(models.Model):
 class Attribute(models.Model):
     """Справочник характеристик (Полотно, Коробка, Наличник, Цвет и т.д.)"""
     name = models.CharField('Название характеристики', max_length=100, unique=True)
-    slug = models.SlugField('URL', unique=True, blank=True)
+    slug = models.SlugField('URL', max_length=255, unique=True, blank=True)
 
     class Meta:
         verbose_name = 'Характеристика'
@@ -48,7 +54,7 @@ class Attribute(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = make_slug(self.name)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -57,7 +63,7 @@ class Attribute(models.Model):
 
 class Product(models.Model):
     name = models.CharField('Название', max_length=255)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='products')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.TextField('Описание', blank=True)
@@ -75,7 +81,7 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = make_slug(self.name)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
