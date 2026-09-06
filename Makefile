@@ -41,4 +41,7 @@ import-products-dry:
 	sudo docker compose exec web python manage.py import_products /app/data/краски.xlsx --images-dir /app/data/product_images --dry-run
 
 import-products:
-	sudo docker compose exec web python manage.py import_products /app/data/panels.xlsx --images-dir /app/data/panel_images
+	sudo docker compose exec web python manage.py import_products /app/data/iron_doors.xlsx --images-dir /app/data/iron_doors_images
+
+import-doors:
+	sudo docker compose exec web python manage.py import_doors /app/data/doors.xlsx --images-dir /app/data/doors_images
