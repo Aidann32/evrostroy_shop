@@ -40,7 +40,7 @@ CSRF_TRUSTED_ORIGINS = ['https://evrostroiaktobe.kz', 'https://www.evrostroiakto
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['evrostroiaktobe.kz', 'www.evrostroiaktobe.kz', '89.35.124.161']
+ALLOWED_HOSTS = ['evrostroiaktobe.kz', 'www.evrostroiaktobe.kz']
 
 CART_SESSION_ID = 'cart'
 
