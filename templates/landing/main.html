@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <section class="blog blog-2 ratio3_2 slick-default-margin section-b-space mt-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title1">
+                        <h4>свежие новости</h4>
+                        <h2 class="title-inner1">новости и события</h2>
+                    </div>
+                    <div class="slide-3 theme-dots slick-dotted">
+                        {% for item in news %}
+                        <div class="col-md-12">
+                            <a href="{{ item.get_absolute_url }}">
+                                <div class="classic-effect">
+                                    <div>
+                                        {% if item.image %}
+                                            <img src="{{ item.image.url }}" alt="{{ item.title }}" class="img-fluid blur-up lazyload bg-img">
+                                        {% else %}
+                                            <img src="{% static 'img/news_placeholder.png' %}" alt="{{ item.title }}" class="img-fluid blur-up lazyload bg-img">
+                                        {% endif %}
+                                    </div>
+                                    <span></span>
+                                </div>
+                            </a>
+                            <div class="blog-details">
+                                <h4>{{ item.published_at|date:"d F Y" }}</h4>
+                                <a href="{{ item.get_absolute_url }}">
+                                    <p>{{ item.title }}</p>
+                                </a>
+                                <h6>{{ item.preview|truncatechars:100 }}</h6>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="text-center">
+                            <p>Новостей пока нет.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-b-space mt-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title1">
+                        <h4>наш ассортимент</h4>
+                        <h2 class="title-inner1">категории товаров</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4">
+                {% for category in categories %}
+                    <div class="col-md-4">
+                        <div class="category-block text-center border p-4">
+                            <a href="{% url 'category_products' category.slug %}">
+                                <h3>{{ category.name }}</h3>
+                            </a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center">
+                        <p>Категории пока не добавлены.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+<!--    <section class="section-b-space mt-0">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-12">-->
+<!--                    <div class="title1">-->
+<!--{#                        <h4>наш ассортимент</h4>#}-->
+<!--                        <h2 class="title-inner1">наши партнеры</h2>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row g-4">-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--                <div class="col-md-3">-->
+<!--                    Партнер 1-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+    <section class="p-0">
+        <a href="category-page.html">
+            <img src="../assets/images/furniture-1/full-banner/2.png" alt="" class="img-fluid blur-up lazyload">
+        </a>
+    </section>
+{% endblock %}

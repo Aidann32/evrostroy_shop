@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Все категории{% endblock %}
+
+{% block content %}
+    <div class="breadcrumb-section">
+        <div class="container">
+            <h2>Категории</h2>
+            <nav class="theme-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'main' %}">Главная</a></li>
+                    <li class="breadcrumb-item">Категории</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <section class="section-b-space mt-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                </div>
+            </div>
+            <div class="row g-4">
+                {% for category in categories %}
+                    <div class="col-md-4">
+                        <div class="category-block text-center border p-4">
+                            <a href="{% url 'category_products' category.slug %}">
+                                <h3>{{ category.name }}</h3>
+                            </a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center">
+                        <p>Категории пока не добавлены.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

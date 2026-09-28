@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if product.meta_title %}{{ product.meta_title }}{% else %}{{ product.name }} - купить в Еврострой{% endif %}
+{% endblock %}
+
+
+{% block meta_description %}
+    {% if product.meta_description %}
+        {{ product.meta_description }}
+    {% else %}
+        {{ product.name }} — {{ product.brand }}. Цена {{ product.price }} ₸. Доставка по Казахстану.
+    {% endif %}
+{% endblock %}
+
+{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}
+
+{% block og_type %}product{% endblock %}
+{% block og_title %}{{ product.name }}{% endblock %}
+{% block og_description %}{{ product.meta_description|default:product.description|truncatechars:160 }}{% endblock %}
+{% block og_image %}{% if product.image %}{{ request.scheme }}://{{ request.get_host }}{{ product.image.url }}{% endif %}{% endblock %}
+
+{% block extra_head %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "{{ product.name|escapejs }}",
+      "image": [
+        {% if product.image %}"{{ request.scheme }}://{{ request.get_host }}{{ product.image.url }}"{% endif %}
+      ],
+      "description": "{{ product.meta_description|default:product.description|truncatechars:300|escapejs }}",
+      "sku": "{{ product.id }}",
+      "brand": {
+        "@type": "Brand",
+        "name": "{{ product.brand.name|escapejs }}"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "{{ request.build_absolute_uri }}",
+        "priceCurrency": "KZT",
+        "price": "{{ product.price }}",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "Еврострой"
+        }
+      }
+    }
+    </script>
+{% endblock %}
+
+{% block content %}
+
+<div class="breadcrumb-section">
+    <div class="container">
+        <h2>{{ product.name }}</h2>
+        <nav class="theme-breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'main' %}">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'all_categories' %}">Категории</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'category_products' product.category.slug %}">{{ product.category.name }}</a></li>
+                <li class="breadcrumb-item active">{{ product.name }}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<section>
+    <div class="collection-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="sticky-top-custom">
+                        <div class="product-slick">
+                            {% if product.image %}
+                            <div><img src="{{ product.image.url }}" alt=""
+                                    class="img-fluid blur-up lazyload w-100"></div>
+                            {% else %}
+                                <div><img src="{% static 'img/product_placeholder.png' %}" alt=""
+                                    class="img-fluid blur-up lazyload w-100"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 rtl-text">
+                    <div class="product-page-details sticky-details">
+                        <h2 class="main-title">{{ product.name }}</h2>
+                        <div class="price-text">
+                            <h3><span class="fw-normal">ЦЕНА:</span> ₸ {{ product.price }}
+                            </h3>
+                            <span>{{ product.brand }}</span>
+                        </div>
+
+                        <div class="size-delivery-info">
+                            <a href="https://wa.me/77089817618?text={{ whatsapp_text }}"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                <i class="ri-questionnaire-line"></i>
+                                Задайте вопрос
+                            </a>
+                        </div>
+
+                        <div class="product-buttons">
+                            <div class="qty-section">
+                                <div class="qty-box">
+                                    <div class="input-group">
+                                        <input type="number"
+                                               name="quantity"
+                                               id="product-quantity"
+                                               class="form-control input-number"
+                                               value="1"
+                                               min="1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-3">
+                                <button class="btn btn-animation btn-solid hover-solid scroll-button add-to-cart-btn"
+                                        type="button"
+                                        data-url="{% url 'cart:add' product.id %}">
+                                    <i class="ri-shopping-cart-line me-1"></i>
+                                    В корзину
+                                </button>
+                            </div>
+                        </div>
+                        <div class="buy-box">
+                            <a href="#share" data-bs-toggle="modal">
+                                <i class="ri-share-line"></i>
+                                <span>Поделиться</span>
+                            </a>
+                        </div>
+                        {% if  product.attributes.all %}
+                        <div class="bordered-box">
+                            <h4 class="sub-title">Характеристики:</h4>
+                            <ul class="shipping-info">
+                                {% for attr in product.attributes.all %}
+                                    <li><span>{{ attr.attribute.name }}:</span> <b>{{ attr.value }}</b></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
+                        <div class="bordered-box">
+                            <h4 class="sub-title">Delivery Details</h4>
+                            <ul class="product-offer delivery-details">
+                                <li><i class="ri-truck-line"></i> Your order is likely
+                                    to reach you within 7 days. </li>
+                                <li><i class="ri-arrow-left-right-line"></i> Hassle
+                                    free returns within 7 Days. </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="tab-product vertical-tab section-b-space">
+    <div class="container">
+        <div class="row tab-border">
+            <div class="col-xl-10 ps-0 pe-0 border-start-0 border-end-0">
+                <div class="tab-content nav-material" id="top-tabContent">
+                    <div class="tab-pane fade show active" id="top-home" role="tabpanel"
+                        aria-labelledby="top-home-tab">
+                        <div class="product-tab-description">
+                            <div class="part">
+                                <p>{{ product.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade theme-modal" id="share" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title">Поделиться товаром</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <ul class="share-icons list-unstyled d-flex justify-content-center gap-3 mb-0">
+                    <li>
+                        <a href="#!" class="share-copy" title="Скопировать ссылку">
+                            <i class="ri-link"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!" class="share-whatsapp" target="_blank" rel="noopener" title="WhatsApp">
+                            <i class="ri-whatsapp-line"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!" class="share-telegram" target="_blank" rel="noopener" title="Telegram">
+                            <i class="ri-telegram-line"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="copy-success text-center mt-3" style="display: none; color: #25D366; font-size: 14px;">
+                    Ссылка скопирована!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const addBtn = document.querySelector('.add-to-cart-btn');
+    if (!addBtn) return;
+
+    addBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const url = this.dataset.url;
+        const quantityInput = document.getElementById('product-quantity');
+        const quantity = quantityInput ? quantityInput.value : 1;
+
+        this.disabled = true;
+        const originalText = this.innerHTML;
+        this.innerHTML = '<i class="ri-loader-4-line me-1"></i> Добавление...';
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken,
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `quantity=${quantity}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateCartUI(data);
+
+                const offcanvasEl = document.getElementById('cartOffcanvas');
+                if (offcanvasEl) {
+                    const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
+                    offcanvas.show();
+                }
+            }
+        })
+        .catch(err => {
+            console.error('Ошибка:', err);
+            alert('Не удалось добавить товар в корзину');
+        })
+        .finally(() => {
+            this.disabled = false;
+            this.innerHTML = originalText;
+        });
+    });
+});
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const productUrl = window.location.href;
+    const productTitle = "{{ product.name|escapejs }}";
+    const shareText = `Посмотрите товар: ${productTitle}`;
+
+    const waBtn = document.querySelector('#share .share-whatsapp');
+    if (waBtn) {
+        waBtn.href = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + productUrl)}`;
+    }
+
+    const tgBtn = document.querySelector('#share .share-telegram');
+    if (tgBtn) {
+        tgBtn.href = `https://t.me/share/url?url=${encodeURIComponent(productUrl)}&text=${encodeURIComponent(shareText)}`;
+    }
+
+    const vkBtn = document.querySelector('#share .share-vk');
+    if (vkBtn) {
+        vkBtn.href = `https://vk.com/share.php?url=${encodeURIComponent(productUrl)}&title=${encodeURIComponent(productTitle)}`;
+    }
+
+    const copyBtn = document.querySelector('#share .share-copy');
+    const successMsg = document.querySelector('#share .copy-success');
+
+    if (copyBtn) {
+        copyBtn.addEventListener('click', async function (e) {
+            e.preventDefault();
+            try {
+                await navigator.clipboard.writeText(productUrl);
+            } catch (err) {
+                const input = document.createElement('input');
+                input.value = productUrl;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+            }
+
+            if (successMsg) {
+                successMsg.style.display = 'block';
+                setTimeout(() => successMsg.style.display = 'none', 2000);
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

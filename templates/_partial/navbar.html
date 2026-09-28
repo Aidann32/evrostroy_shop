@@ -1,0 +1,124 @@
+{% load static %}
+<!--<header id="sticky-header" class="header-2">-->
+<header class="header-2">
+    <div class="mobile-fix-option"></div>
+    <div class="top-header top-header-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="header-contact">
+                        <ul>
+                            <li>Добро пожаловать в Еврострой</li>
+                            <li><i class="ri-phone-fill"></i>Позвоните нам: <a href="tel:+77789880992">+7 778 988 0992</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="main-menu border-section border-top-0">
+                    <div class="menu-left">
+                        <div class="navbar"><a href="javascript:void(0)" onclick="openNav()"><i
+                                    class="ri-bar-chart-horizontal-line sidebar-bar"></i></a>
+                            <div id="mySidenav" class="sidenav">
+                                <a href="javascript:void(0)" class="sidebar-overlay" onclick="closeNav()"></a>
+                                <nav>
+                                    <a href="javascript:void(0)" onclick="closeNav()">
+                                        <div class="sidebar-back text-start"><i class="fa fa-angle-left pe-2"></i>
+                                            НАЗАД</div>
+                                    </a>
+                                    <ul id="sub-menu" class="sm pixelstrap sm-vertical">
+                                        {%  for category in categories %}
+                                            <li><a href="{% url 'category_products' category.slug %}">{{ category.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="brand-logo">
+                        <a href="{% url 'main' %}"><img src="{% static 'img/logo.png' %}" class="img-fluid blur-up lazyload" alt=""></a>
+                    </div>
+                    <div class="menu-right pull-right">
+                        <div class="icon-nav">
+                            <ul>
+                                <li class="onhover-div mobile-search">
+                                    <div data-bs-toggle="modal" data-bs-target="#searchModal">
+                                        <i class="ri-search-line"></i>
+                                    </div>
+                                </li>
+                                <li class="onhover-div mobile-cart">
+                                    <div data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                                        <i class="ri-shopping-cart-line"></i>
+                                    </div>
+                                    <span class="cart_qty_cls">{{ cart|length }}</span>
+                                </li>
+                                <li class="onhover-div mobile-dark-mode">
+                                    <div id="darkModeToggle" style="cursor: pointer;">
+                                        <i class="ri-moon-line" id="darkModeIcon"></i>
+                                    </div>
+                                </li>
+                                <script>
+                                    (function() {
+                                        var toggle = document.getElementById('darkModeToggle');
+                                        var icon = document.getElementById('darkModeIcon');
+                                        function updateIcon() {
+                                            if (localStorage.getItem('layout_version') === 'dark') {
+                                                icon.className = 'ri-sun-line';
+                                            } else {
+                                                icon.className = 'ri-moon-line';
+                                            }
+                                        }
+                                        updateIcon();
+                                        toggle.addEventListener('click', function() {
+                                            var body = document.body;
+                                            var darkSwitch = document.getElementById('darkmode');
+                                            if (body.classList.contains('dark')) {
+                                                body.classList.remove('dark');
+                                                localStorage.removeItem('layout_version');
+                                                if (darkSwitch) darkSwitch.checked = false;
+                                            } else {
+                                                body.classList.add('dark');
+                                                localStorage.setItem('layout_version', 'dark');
+                                                if (darkSwitch) darkSwitch.checked = true;
+                                            }
+                                            updateIcon();
+                                        });
+                                    })();
+                                </script>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-nav-center">
+                    <nav id="main-nav">
+                        <div class="toggle-nav"><i class="ri-bar-chart-horizontal-line sidebar-bar"></i></div>
+                        <ul id="main-menu" class="sm pixelstrap sm-horizontal">
+                            <li class="mobile-box">
+                                <div class="mobile-back text-end">Меню<i class="ri-close-line"></i></div>
+                            </li>
+                            <li><a href="{% url 'main' %}">Главная</a></li>
+                            <li>
+                                <a href="{% url 'all_categories' %}">Магазин </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'news:list' %}">Новости</a>
+                            </li>
+                            <li><a href="{% url 'contact' %}">Контакты</a></li>
+                            <li><a href="{% url 'about' %}">О нас</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
