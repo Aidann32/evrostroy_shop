@@ -29,12 +29,18 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-53dh0u!x&k6jt@af3meui6p+m(3%ldh3lof^r0^mtyc6o+7$q2'
+SECRET_KEY = os.environ['SECRET_KEY']
+# SECRET_KEY = 'django-insecure-53dh0u!x&k6jt@af3meui6p+m(3%ldh3lof^r0^mtyc6o+7$q2'
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = ['https://evrostroiaktobe.kz', 'https://www.evrostroiaktobe.kz']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['evrostroiaktobe.kz', 'www.evrostroiaktobe.kz', '89.35.124.161']
 
 CART_SESSION_ID = 'cart'
 
@@ -144,4 +150,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
