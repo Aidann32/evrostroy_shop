@@ -22,6 +22,15 @@ migrate:
 collectstatic:
 	sudo docker compose exec web python manage.py collectstatic --noinput
 
+# Обновить фронтенд и сбросить кэш у пользователей: пишет новую FRONTEND_VERSION в .env
+frontend-release:
+	sed -i '/^FRONTEND_VERSION=/d' .env
+	echo "FRONTEND_VERSION=$$(date +%Y%m%d%H%M%S)" >> .env
+	sudo docker compose -f docker-compose.prod.yml build web
+	sudo docker compose -f docker-compose.prod.yml up -d web
+	sudo docker compose -f docker-compose.prod.yml exec web python manage.py migrate
+	sudo docker compose -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput
+
 makemigrations:
 	sudo docker compose exec web python manage.py makemigrations
 

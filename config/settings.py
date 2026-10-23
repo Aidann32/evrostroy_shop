@@ -22,6 +22,20 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'config.storage.VersionedStaticFilesStorage',
+    },
+}
+
+# Версия фронтенда. Поменяйте значение (например, на дату деплоя) после обновления
+# шаблонов/CSS/JS: ссылки на статику получат новый ?v=, а у пользователей
+# один раз очистится кэш браузера (см. config/middleware.py). Пусто — выключено.
+FRONTEND_VERSION = os.environ.get('FRONTEND_VERSION', '')
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -101,6 +115,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'config.middleware.FrontendVersionMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
