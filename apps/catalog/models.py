@@ -33,6 +33,15 @@ class Category(models.Model):
         default=2147483647,
         help_text='Чем меньше число, тем выше категория в списке',
     )
+    description = models.TextField(
+        'Описание', blank=True,
+        help_text='Текст под товарами на странице категории. Например: «Межкомнатные и входные двери в Актобе…»',
+    )
+    meta_title = models.CharField(
+        'SEO заголовок', max_length=255, blank=True,
+        help_text='Если пусто: «<Категория> в Актобе — купить в Еврострой»',
+    )
+    meta_description = models.TextField('SEO описание', blank=True)
 
     class Meta:
         verbose_name = 'Категория'
@@ -43,6 +52,9 @@ class Category(models.Model):
         if not self.slug:
             self.slug = make_slug(self.name)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('category_products', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name

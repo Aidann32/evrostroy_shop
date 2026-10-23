@@ -47,6 +47,33 @@ CART_SESSION_ID = 'cart'
 # Яндекс.Метрика
 YANDEX_METRIKA_ID = '98765432'
 
+# SEO
+# Основной адрес сайта без слэша в конце, например https://evrostroy.kz.
+# Используется в canonical, og:url, sitemap и микроразметке. Если пусто — берется из запроса.
+SITE_URL = os.environ.get('SITE_URL', '')
+
+# Коды подтверждения из Google Search Console и Яндекс.Вебмастера (только значение content)
+GOOGLE_SITE_VERIFICATION = os.environ.get('GOOGLE_SITE_VERIFICATION', '')
+YANDEX_VERIFICATION = os.environ.get('YANDEX_VERIFICATION', '')
+
+# Данные компании: одинаковые на всех страницах, в микроразметке и в llms.txt
+COMPANY = {
+    'name': 'Еврострой',
+    'description': 'Магазин строительных и отделочных материалов в Актобе: двери, обои, краски, плитка и другие товары для ремонта.',
+    'phone': '+77789880992',
+    'phone_display': '+7 778 988 0992',
+    'whatsapp': '77789880992',
+    'country': 'KZ',
+    'region': 'Актюбинская область',
+    'city': 'Актобе',
+    'street': 'ул. Кунаева, 165',
+    'latitude': '50.294852',
+    'longitude': '57.202076',
+    'instagram': 'https://www.instagram.com/evrostroiaktobe',
+    'tiktok': 'https://www.tiktok.com/@evrostroiaktobe04',
+    'twogis': 'https://2gis.kz/aktobe/firm/70000001032841858',
+}
+
 
 # Application definition
 
@@ -93,6 +120,7 @@ TEMPLATES = [
                 'apps.landing.context_processors.navbar',
                 'apps.cart.context_processors.cart',
                 'apps.landing.context_processors.yandex_metrika',
+                'apps.landing.context_processors.seo',
             ],
         },
     },

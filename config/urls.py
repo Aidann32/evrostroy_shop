@@ -5,7 +5,7 @@ from django.conf.urls import include
 from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
 
-from apps.catalog.sitemaps import ProductSitemap, CategorySitemap
+from apps.catalog.sitemaps import StaticSitemap, ProductSitemap, CategorySitemap, NewsSitemap
 
 from config import settings
 
@@ -14,8 +14,10 @@ admin.site.site_title = "Админка"
 admin.site.index_title = "Добро пожаловать в админ-панель"
 
 sitemaps = {
+    'static': StaticSitemap,
     'products': ProductSitemap,
     'categories': CategorySitemap,
+    'news': NewsSitemap,
 }
 
 urlpatterns = [
@@ -26,6 +28,7 @@ urlpatterns = [
     path('cart/', include('apps.cart.urls', namespace='cart')),
     path('orders/', include('apps.orders.urls')),
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    path('llms.txt', TemplateView.as_view(template_name='llms.txt', content_type='text/plain; charset=utf-8')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 

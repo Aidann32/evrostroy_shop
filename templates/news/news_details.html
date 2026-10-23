@@ -1,10 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ item.title }}{% endblock %}
+{% block title %}{{ item.title }} — новости Еврострой{% endblock %}
 
-{% block meta_description %}
-    Каталог дверей, плитки и отделочных материалов. Выберите товар и оформите заказ онлайн.
+{% block meta_description %}{% firstof item.preview|striptags|truncatechars:160 item.content|striptags|truncatechars:160 %}{% endblock %}
+
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ item.title }}{% endblock %}
+{% block og_description %}{% firstof item.preview|striptags|truncatechars:160 item.content|striptags|truncatechars:160 %}{% endblock %}
+{% block og_image %}{% if item.image %}{{ site_url }}{{ item.image.url }}{% else %}{{ site_url }}{% static 'img/logo.png' %}{% endif %}{% endblock %}
+
+{% block extra_head %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "headline": "{{ item.title|escapejs }}",
+      "description": "{{ item.preview|default:item.content|striptags|truncatechars:300|escapejs }}",
+      "image": ["{% if item.image %}{{ site_url }}{{ item.image.url }}{% else %}{{ site_url }}{% static 'img/news_placeholder.png' %}{% endif %}"],
+      "datePublished": "{{ item.published_at|date:'c' }}",
+      "dateModified": "{{ item.updated_at|date:'c' }}",
+      "mainEntityOfPage": "{{ site_url }}{{ item.get_absolute_url }}",
+      "inLanguage": "ru",
+      "author": {"@id": "{{ site_url }}/#organization"},
+      "publisher": {"@id": "{{ site_url }}/#organization"}
+    }
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -24,13 +45,13 @@
         <div class="container">
             <div class="blog-detail">
                 {% if item.image %}
-                    <img class="img-fluid" src="{{ item.image.url }}" alt="{{ item.preview }}">
+                    <img class="img-fluid" src="{{ item.image.url }}" alt="{{ item.title }}">
                 {% else %}
                     <img src="{% static 'img/news_placeholder.png' %}" alt="{{ item.title }}" class="img-fluid">
                 {% endif %}
-                <h3>{{ item.title }}</h3>
+                <h1 class="h3">{{ item.title }}</h1>
                 <ul class="post-social">
-                    <li>{{ item.published_at|date:"d F Y" }}</li>
+                    <li><time datetime="{{ item.published_at|date:'c' }}">{{ item.published_at|date:"d F Y" }}</time></li>
                 </ul>
             </div>
             <div class="blog-detail-contain">

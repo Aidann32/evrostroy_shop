@@ -1,8 +1,31 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /cart/
+Disallow: /orders/
+Disallow: /catalog/?q=
 
+User-agent: Yandex
+Allow: /
+Disallow: /admin/
+Disallow: /cart/
+Disallow: /orders/
+Disallow: /catalog/?q=
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&gclid&fbclid
+
+# ИИ-поисковики и ассистенты: разрешаем, чтобы магазин попадал в ответы ChatGPT, Claude, Perplexity, Gemini, Алисы
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+Allow: /
 Disallow: /admin/
 Disallow: /cart/
 Disallow: /orders/
 
-Sitemap: https://ваш-домен.kz/sitemap.xml
+Sitemap: {{ site_url }}/sitemap.xml

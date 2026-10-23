@@ -1,16 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Все новости{% endblock %}
+{% block title %}Новости и акции магазина Еврострой в Актобе{% endblock %}
 
-{% block meta_description %}
-    Каталог дверей, плитки и отделочных материалов. Выберите товар и оформите заказ онлайн.
-{% endblock %}
+{% block meta_description %}Новости, акции и поступления товаров в магазине строительных и отделочных материалов Еврострой, Актобе.{% endblock %}
+{% block og_title %}Новости — Еврострой{% endblock %}
 
 {% block content %}
     <div class="breadcrumb-section">
         <div class="container">
-            <h2>Новости</h2>
+            <h1>Новости</h1>
             <nav class="theme-breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'main' %}">Главная</a></li>

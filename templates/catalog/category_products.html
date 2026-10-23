@@ -2,24 +2,41 @@
 {% load static %}
 
 
-{% block title %}
-    {% if query %}Поиск: {{ query }} — Еврострой{% else %}{{ category.name }}{% endif %}
-{% endblock %}
+{% block title %}{% if query %}Поиск: {{ query }} — Еврострой{% elif category.meta_title %}{{ category.meta_title }}{% elif category %}{{ category.name }} в Актобе — купить в Еврострой{% else %}Каталог строительных и отделочных материалов в Актобе — Еврострой{% endif %}{% endblock %}
 
-{% block meta_description %}
-    Каталог дверей, плитки и отделочных материалов. Выберите товар и оформите заказ онлайн.
+{% block meta_description %}{% if category.meta_description %}{{ category.meta_description }}{% elif category %}{{ category.name }} в Актобе по выгодным ценам в магазине Еврострой, ул. Кунаева, 165. Оформите заказ на сайте или в WhatsApp.{% else %}Каталог строительных и отделочных материалов в Актобе: двери, обои, краски, плитка. Цены и заказ на сайте и в WhatsApp.{% endif %}{% endblock %}
+
+{% block og_title %}{% if category %}{{ category.name }} в Актобе — Еврострой{% else %}Каталог — Еврострой{% endif %}{% endblock %}
+
+{# Страницы поиска не индексируем, ссылки на товары с них — индексируем #}
+{% block meta_robots %}{% if query %}noindex, follow{% else %}index, follow, max-image-preview:large{% endif %}{% endblock %}
+
+{% block extra_head %}
+    {% if category %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Главная", "item": "{{ site_url }}/"},
+        {"@type": "ListItem", "position": 2, "name": "Категории", "item": "{{ site_url }}{% url 'all_categories' %}"},
+        {"@type": "ListItem", "position": 3, "name": "{{ category.name|escapejs }}", "item": "{{ site_url }}{{ category.get_absolute_url }}"}
+      ]
+    }
+    </script>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
     {% if query %}
       <div class="search-result-header mb-4 text-center">
-        <h3>Результаты поиска по запросу: «{{ query }}»</h3>
+        <h1 class="h3">Результаты поиска по запросу: «{{ query }}»</h1>
         <p>Найдено товаров: {{ products|length }}</p>
       </div>
     {% else %}
          <div class="breadcrumb-section">
             <div class="container">
-                <h2>Товары</h2>
+                <h1>{% if category %}{{ category.name }} в Актобе{% else %}Каталог товаров{% endif %}</h1>
                 <nav class="theme-breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
@@ -28,7 +45,7 @@
                         <li class="breadcrumb-item">
                             <a href="{% url 'all_categories' %}">Категории</a>
                         </li>
-                        <li class="breadcrumb-item active">{{ category.name }}</li>
+                        {% if category %}<li class="breadcrumb-item active">{{ category.name }}</li>{% endif %}
                     </ol>
                 </nav>
             </div>
@@ -40,12 +57,6 @@
                 <div class="row">
                     <div class="collection-content col-xl-12 col-lg-12">
                         <div class="page-main-content">
-                            <div class="top-banner-wrapper">
-                                <a href="#!">
-                                    <img src="../assets/images/inner-page/banner/1.png"
-                                        class="img-fluid blur-up lazyload" alt="">
-                                </a>
-                            </div>
                             <div class="collection-product-wrapper">
                                 <div class="product-wrapper-grid">
                                     <div class="row g-3 g-sm-4">
@@ -75,7 +86,7 @@
                                                         <div>
                                                             <div class="brand-w-color">
                                                                 <a class="product-title"
-                                                                    href="product-page(accordian).html">
+                                                                    href="{% url 'product_page' product.slug %}">
                                                                     {{ product.name }}
                                                                 </a>
                                                             </div>
@@ -104,6 +115,13 @@
             </div>
         </div>
     </section>
+    {% if category.description and not query %}
+    <section class="section-b-space pt-0">
+        <div class="container">
+            <div class="category-description">{{ category.description|linebreaks }}</div>
+        </div>
+    </section>
+    {% endif %}
 {% endblock %}
 
 {% block extra_js %}

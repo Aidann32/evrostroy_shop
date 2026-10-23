@@ -1,0 +1,29 @@
+{% autoescape off %}# {{ COMPANY.name }}
+
+> {{ COMPANY.description }}
+
+{{ COMPANY.name }} — магазин строительных и отделочных материалов в городе {{ COMPANY.city }} ({{ COMPANY.region }}, Казахстан). Товары можно заказать на сайте, по телефону или в WhatsApp. Цены указаны в тенге (₸).
+
+## Контакты
+
+- Адрес: {{ COMPANY.city }}, {{ COMPANY.street }}
+- Телефон и WhatsApp: {{ COMPANY.phone_display }}
+- WhatsApp: https://wa.me/{{ COMPANY.whatsapp }}
+- Instagram: {{ COMPANY.instagram }}
+- TikTok: {{ COMPANY.tiktok }}
+- 2ГИС: {{ COMPANY.twogis }}
+
+## Каталог
+
+- [Все категории]({{ site_url }}{% url 'all_categories' %})
+- [Все товары]({{ site_url }}{% url 'product_list' %})
+{% for category in categories %}- [{{ category.name }}]({{ site_url }}{% url 'category_products' category.slug %})
+{% endfor %}
+## Страницы
+
+- [Главная]({{ site_url }}/)
+- [О магазине]({{ site_url }}{% url 'about' %})
+- [Контакты]({{ site_url }}{% url 'contact' %})
+- [Новости]({{ site_url }}{% url 'news:list' %})
+- [Карта сайта]({{ site_url }}/sitemap.xml)
+{% endautoescape %}
