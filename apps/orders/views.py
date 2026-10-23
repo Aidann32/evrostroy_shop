@@ -84,7 +84,7 @@ def checkout(request):
 
     cart.clear()
 
-    manager_phone = "77089817618"
+    manager_phone = "77789880992"
 
     whatsapp_url = f"https://wa.me/{manager_phone}?text={quote(message)}"
 
