@@ -15766,7 +15766,7 @@ header.stickycls {
   width: 100%;
   border: none;
   top: 0;
-  font-family: Lato;
+  font-family: inherit;
 }
 .offcanvas.cart-offcanvas .offcanvas-header {
   display: -webkit-box;
@@ -54506,6 +54506,8 @@ body.dark {
     .header-2 .main-menu {
         position: relative;
         z-index: 9;
+        /* логотип позиционирован абсолютно: 90px + padding 25px сверху и снизу */
+        min-height: 140px;
     }
 
     .header-2 .menu-left .navbar {
@@ -54521,6 +54523,17 @@ body.dark {
     /* Ensure icons are clickable and not overlapped */
     .header-2 .icon-nav {
         z-index: 11;
+    }
+
+    /* Кнопка правого меню должна быть выше .main-menu (z-index: 9), иначе первый клик перехватывает шапка.
+       Когда открыт левый сайдбар, script.js сам ставит ей inline z-index: 1 */
+    .header-2 #main-nav .toggle-nav {
+        z-index: 10;
+    }
+
+    /* Поиск справа рядом с темной темой, чтобы кнопка WhatsApp слева его не перекрывала */
+    .header-2 .main-menu .menu-right .icon-nav .mobile-search {
+        right: 36%;
     }
     
     .header-2 .layout2-logo {
