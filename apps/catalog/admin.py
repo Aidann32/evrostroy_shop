@@ -24,7 +24,8 @@ class BrandAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
+    list_display = ('name', 'slug', 'sequence')
+    list_editable = ('sequence',)
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
 
