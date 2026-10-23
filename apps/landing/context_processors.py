@@ -18,3 +18,12 @@ def yandex_metrika(request):
         'YANDEX_METRIKA_ID': getattr(settings, 'YANDEX_METRIKA_ID', ''),
         'debug': settings.DEBUG,
     }
+
+def seo(request):
+    site_url = settings.SITE_URL.rstrip('/') or f'{request.scheme}://{request.get_host()}'
+    return {
+        'site_url': site_url,
+        'COMPANY': settings.COMPANY,
+        'GOOGLE_SITE_VERIFICATION': settings.GOOGLE_SITE_VERIFICATION,
+        'YANDEX_VERIFICATION': settings.YANDEX_VERIFICATION,
+    }

@@ -1,3 +1,4 @@
+{% load static %}
 <footer class="footer-light">
     <section class="section-b-space light-layout">
         <div class="container">
@@ -7,8 +8,8 @@
                         <h4>О нас</h4>
                     </div>
                     <div class="footer-content">
-                        <a href="index.html" class="footer-logo d-block">
-                            <img src="../assets/images/furniture-1/logo.png" alt="">
+                        <a href="{% url 'main' %}" class="footer-logo d-block">
+                            <img src="{% static 'img/logo.png' %}" alt="Еврострой — строительные материалы в Актобе" style="max-height: 90px;" loading="lazy">
                         </a>
                         <p>Качественные строительные и отделочные материалы для дома, ремонта и новых проектов —
                             тщательно подобранный ассортимент, выгодные цены и удобные покупки, чтобы воплощать ваши
@@ -16,17 +17,17 @@
                         <div class="footer-social">
                             <ul>
                                 <li>
-                                    <a href="https://wa.me/77789880992">
+                                    <a href="https://wa.me/77789880992" target="_blank" rel="noopener" aria-label="WhatsApp">
                                         <i class="ri-whatsapp-fill"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="https://www.instagram.com/evrostroiaktobe">
+                                    <a href="https://www.instagram.com/evrostroiaktobe" target="_blank" rel="noopener" aria-label="Instagram">
                                         <i class="ri-instagram-fill"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="https://www.tiktok.com/@evrostroiaktobe04">
+                                    <a href="https://www.tiktok.com/@evrostroiaktobe04" target="_blank" rel="noopener" aria-label="TikTok">
                                         <i class="ri-tiktok-fill"></i>
                                     </a>
                                 </li>
@@ -52,8 +53,6 @@
                                     </a>
                                 </li>
                                 <li><i class="ri-phone-fill"></i><a href="tel:+77789880992">+7 778 988 0992</a></li>
-                                <li><i class="ri-mail-fill"></i><a href="#!">Support@Multikart.com</a>
-                                </li>
                             </ul>
                         </div>
                     </div>

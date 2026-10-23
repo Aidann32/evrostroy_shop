@@ -1,9 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Главная{% endblock %}
+{% block title %}Еврострой — стройматериалы в Актобе: двери, обои, краски, плитка{% endblock %}
 
 {% block content %}
+    <section class="section-b-space pb-0">
+        <div class="container">
+            <div class="title1">
+                <h4>магазин в Актобе</h4>
+                <h1 class="title-inner1">Строительные и отделочные материалы в Актобе</h1>
+            </div>
+            <p class="text-center mx-auto" style="max-width: 820px;">
+                «Еврострой» — магазин стройматериалов в Актобе. У нас можно купить двери, обои, краски, плитку
+                и другие строительные и отделочные материалы для ремонта квартиры, дома и офиса.
+                Ждем вас по адресу: {{ COMPANY.city }}, {{ COMPANY.street }}. Заказ на сайте, по телефону
+                <a href="tel:{{ COMPANY.phone }}">{{ COMPANY.phone_display }}</a> или в WhatsApp.
+            </p>
+        </div>
+    </section>
+
     <section class="blog blog-2 ratio3_2 slick-default-margin section-b-space mt-0">
         <div class="container">
             <div class="row">
@@ -107,9 +122,21 @@
 <!--        </div>-->
 <!--    </section>-->
 
-    <section class="p-0">
-        <a href="category-page.html">
-            <img src="../assets/images/furniture-1/full-banner/2.png" alt="" class="img-fluid blur-up lazyload">
-        </a>
+    {# Текстовый блок для поисковиков и ИИ: кто мы, что продаем, где находимся #}
+    <section class="section-b-space">
+        <div class="container">
+            <h2 class="h4 mb-3">Магазин стройматериалов «Еврострой» в Актобе</h2>
+            <p>
+                В «Еврострой» собраны товары для строительства, ремонта и отделки:
+                {% for category in categories %}<a href="{{ category.get_absolute_url }}">{{ category.name|lower }}</a>{% if not forloop.last %}, {% endif %}{% empty %}двери, обои, краски, плитка{% endfor %}.
+                В каталоге указаны цены в тенге и характеристики товаров, поэтому подобрать материалы можно заранее,
+                а затем оформить заказ на сайте или уточнить детали у менеджера в WhatsApp.
+            </p>
+            <p>
+                Магазин находится в Актобе по адресу {{ COMPANY.street }}.
+                Телефон и WhatsApp: <a href="tel:{{ COMPANY.phone }}">{{ COMPANY.phone_display }}</a>.
+                Следите за новинками и акциями в нашем <a href="{{ COMPANY.instagram }}" target="_blank" rel="noopener">Instagram</a>.
+            </p>
+        </div>
     </section>
 {% endblock %}

@@ -1,35 +1,90 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
-    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+    <link rel="apple-touch-icon" href="{% static 'img/favicon.png' %}">
 
-    <title>{% block title %}{% endblock %} - Магазин Еврострой</title>
+    <title>{% block title %}Еврострой — строительные и отделочные материалы в Актобе{% endblock %}</title>
 
-    <meta name="description" content="{% block meta_description %}Интернет-магазин Еврострой: двери, кафель, отделочные материалы. Доставка по Казахстану.{% endblock %}">
-    <meta name="keywords" content="{% block meta_keywords %}двери, плитка, кафель, еврострой, отделочные материалы{% endblock %}">
-    <meta name="robots" content="{% block meta_robots %}index, follow{% endblock %}">
+    <meta name="description" content="{% block meta_description %}Еврострой — магазин строительных и отделочных материалов в Актобе: двери, обои, краски, плитка и всё для ремонта. Адрес: ул. Кунаева, 165. Заказ на сайте и в WhatsApp.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}стройматериалы Актобе, строительные материалы Актобе, отделочные материалы, еврострой, двери, обои, краски, плитка{% endblock %}">
+    <meta name="robots" content="{% block meta_robots %}index, follow, max-image-preview:large{% endblock %}">
+    {% if GOOGLE_SITE_VERIFICATION %}<meta name="google-site-verification" content="{{ GOOGLE_SITE_VERIFICATION }}">{% endif %}
+    {% if YANDEX_VERIFICATION %}<meta name="yandex-verification" content="{{ YANDEX_VERIFICATION }}">{% endif %}
 
-    <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+    <meta name="geo.region" content="KZ-AKT">
+    <meta name="geo.placename" content="{{ COMPANY.city }}">
+    <meta name="geo.position" content="{{ COMPANY.latitude }};{{ COMPANY.longitude }}">
+
+    {# Без GET-параметров, чтобы ?utm и прочие метки не создавали дубли страниц #}
+    <link rel="canonical" href="{% block canonical %}{{ site_url }}{{ request.path }}{% endblock %}">
 
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:title" content="{% block og_title %}{{ block.super }}{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}{{ block.super }}{% endblock %}">
-    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
-    <meta property="og:image" content="{% block og_image %}{% static 'img/og-default.jpg' %}{% endblock %}">
-    <meta property="og:site_name" content="Еврострой">
+    <meta property="og:title" content="{% block og_title %}Еврострой — строительные и отделочные материалы в Актобе{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Двери, обои, краски, плитка и всё для ремонта в Актобе. Заказ на сайте и в WhatsApp.{% endblock %}">
+    <meta property="og:url" content="{{ site_url }}{{ request.path }}">
+    <meta property="og:image" content="{% block og_image %}{{ site_url }}{% static 'img/logo.png' %}{% endblock %}">
+    <meta property="og:site_name" content="{{ COMPANY.name }}">
     <meta property="og:locale" content="ru_RU">
 
+    {# Остальные twitter:* соцсети берут из og:* #}
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{% block twitter_title %}{{ block.super }}{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}{{ block.super }}{% endblock %}">
-    <meta name="twitter:image" content="{% block twitter_image %}{{ block.super }}{% endblock %}">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "HardwareStore",
+          "@id": "{{ site_url }}/#organization",
+          "name": "{{ COMPANY.name|escapejs }}",
+          "description": "{{ COMPANY.description|escapejs }}",
+          "url": "{{ site_url }}/",
+          "logo": "{{ site_url }}{% static 'img/logo.png' %}",
+          "image": "{{ site_url }}{% static 'img/logo.png' %}",
+          "telephone": "{{ COMPANY.phone }}",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ COMPANY.street|escapejs }}",
+            "addressLocality": "{{ COMPANY.city|escapejs }}",
+            "addressRegion": "{{ COMPANY.region|escapejs }}",
+            "addressCountry": "{{ COMPANY.country }}"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": {{ COMPANY.latitude }},
+            "longitude": {{ COMPANY.longitude }}
+          },
+          "areaServed": "{{ COMPANY.city|escapejs }}",
+          "currenciesAccepted": "KZT",
+          "sameAs": [
+            "{{ COMPANY.instagram }}",
+            "{{ COMPANY.tiktok }}",
+            "{{ COMPANY.twogis }}"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "{{ site_url }}/#website",
+          "url": "{{ site_url }}/",
+          "name": "{{ COMPANY.name|escapejs }}",
+          "inLanguage": "ru",
+          "publisher": {"@id": "{{ site_url }}/#organization"},
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "{{ site_url }}{% url 'product_list' %}?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"

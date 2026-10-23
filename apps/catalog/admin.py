@@ -28,6 +28,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_editable = ('sequence',)
     search_fields = ('name',)
     prepopulated_fields = {'slug': ('name',)}
+    fields = ('name', 'slug', 'sequence', 'description', 'meta_title', 'meta_description')
 
 
 @admin.register(Product)
