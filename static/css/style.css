@@ -54547,3 +54547,27 @@ body.dark {
         justify-content: center !important;
     }
 }
+
+/* Страница всегда по ширине экрана: без горизонтальной прокрутки и «уезжания» при отдалении */
+html,
+body {
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+/* h1 в теме 60px без адаптива: на телефоне длинные слова капсом не помещались в экран */
+h1 {
+    font-size: clamp(22px, 2.5vw + 12px, 60px);
+}
+
+h1,
+h2,
+h3 {
+    overflow-wrap: break-word;
+}
+
+img,
+iframe,
+video {
+    max-width: 100%;
+}
