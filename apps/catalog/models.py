@@ -22,11 +22,16 @@ class Brand(models.Model):
 class Category(models.Model):
     name = models.CharField('Категория', max_length=100)
     slug = models.SlugField(unique=True, blank=True)
+    sequence = models.PositiveIntegerField(
+        'Порядок отображения',
+        default=2147483647,
+        help_text='Чем меньше число, тем выше категория в списке',
+    )
 
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
-        ordering = ['name']
+        ordering = ['sequence', 'name']
 
     def save(self, *args, **kwargs):
         if not self.slug:
