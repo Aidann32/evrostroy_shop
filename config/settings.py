@@ -59,7 +59,7 @@ ALLOWED_HOSTS = ['evrostroiaktobe.kz', 'www.evrostroiaktobe.kz']
 CART_SESSION_ID = 'cart'
 
 # Яндекс.Метрика
-YANDEX_METRIKA_ID = '98765432'
+YANDEX_METRIKA_ID = '113877814'
 
 # SEO
 # Основной адрес сайта без слэша в конце, например https://evrostroy.kz.
